@@ -2,10 +2,14 @@ package slash.code;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class BinaryTree {
-    //example of functional interface using lambda
-    MyFunctionalInterface functionalInterface=(list)->list.toString().replace("[","").replace("]","").replace(",","");
+    //example of functional interface using lambda and Functions
+    MyFunctionalInterface replaceInterface =(list)->list.replace("[","").replace("]","").replace(",","");
+    Function<List<Integer>,String> rawString=List::toString;
+    Function<String,String> refine = s ->s.replace("[","").replace("]","").replace(",","" );
+    Function<List<Integer>,String> result=rawString.andThen(refine);
     //to check if subtree
     public  boolean isSubtree(Node tree,Node sub){
         if (sub==null) return true;
@@ -16,13 +20,16 @@ public class BinaryTree {
         inOrder(sub,second);
         System.out.println(first);
         System.out.println(second);
-        if (!functionalInterface.listToString(first).contains(functionalInterface.listToString(second))) return false;
+      //  if (!replaceInterface.replaceChar(listToString(first)).contains(replaceInterface.replaceChar(listToString(second)))) return false;
+        if (!result.apply(first).contains(result.apply(second))) return false;
+
         first.clear();
         second.clear();
 
         preOrder(tree,first);
         preOrder(tree,second);
-        return functionalInterface.listToString(first).contains(functionalInterface.listToString(second));
+//        return replaceInterface.replaceChar(listToString(first)).contains(replaceInterface.replaceChar(listToString(second)));
+        return result.apply(first).contains(result.apply(second)) ;
 
 
     }
@@ -30,7 +37,7 @@ public class BinaryTree {
 
 //    public  String listToString(List<Integer>list) {
 //        System.out.println(list);
-//        return list.toString().replace("[","").replace("]","").replace(",","");
+//       return func.apply(list);
 //    }
 
 
@@ -64,7 +71,7 @@ public class BinaryTree {
 @FunctionalInterface
 interface MyFunctionalInterface{
 
-    public  String listToString(List<Integer>list);
+    public  String replaceChar(String list);
 
 
 }
