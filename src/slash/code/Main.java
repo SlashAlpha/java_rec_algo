@@ -7,7 +7,17 @@ public class Main {
 
 
     public static void main(String[] args) {
-	// write your code here
+
+
+	    Factorial factorial=new Factorial();
+        int x=4;
+        int z=factorial.factorial(x);
+        System.out.println("-------factorial("+x+")-------");
+        System.out.println(z);
+        int y=factorial.factorialTail(4,1);
+        System.out.println(y==z);
+
+        System.out.println("-------fibonacci-------");
         Fibonnaci fibonnaci=new Fibonnaci();
         System.out.println(fibonnaci.fibonacci(20));
 
